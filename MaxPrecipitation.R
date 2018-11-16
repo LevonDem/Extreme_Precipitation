@@ -50,7 +50,7 @@ for(i in 1:numLong){
 
 
 ## Write output as a .txt file
-write.table(percentiles, file = "Extreme_Prec_90.txt", quote = FALSE, sep = " ", row.names = FALSE, col.names = FALSE)
+write.table(percentiles, file = "Extreme_Prec_95.txt", quote = FALSE, sep = " ", row.names = FALSE, col.names = FALSE)
 
 ## View precipitation percentile data (optional)
 # longitude <- seq(-179.875, 179.875, length.out = 1440)
