@@ -59,7 +59,7 @@ avePrec    <- as.matrix(read.table("Average_Prec.txt", sep = " "))
 topography <- as.matrix(read.table("Topography.txt", sep = " "))
 
 ## Import clustering results
-clusterMap <- as.matrix(read.csv("cluster_results_07_28_2016.csv", header = TRUE, sep = ","))
+clusterMap <- as.matrix(read.csv("cluster_results.csv", header = TRUE, sep = ","))
 
 ## Define longitude and latitude
 long_len   <- 1440
