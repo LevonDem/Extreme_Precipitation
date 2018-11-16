@@ -44,7 +44,7 @@ This script outputs a single text file, "Extreme_Prec_95.txt"
 In the third step, we partition the 1440x400 grid points into non-overlapping clusters where extreme precipitation behavior can be considered to be reasonably homogeneous.
 
 We use k-means clustering, performed in three iterations. We use the following covariates as input into the clustering algorithm:
-1. Location (longitude and latitude)
+1. Location (longitude and latitude).
 2. 95th percentile of precipitation intensity. Alternatively, average precipitation can be used.
 3. Topography (derived from 5' National Geophysical Data Center (NGDC) TerrainBase Global Digital Terrain Model (DTM), version 1.0, and binned into 0.25 resolution). This file is included in this repository.
 
@@ -53,10 +53,37 @@ The current version of the script runs the clustering algorithm using average pr
 ``` 
 avePrec <-  as.matrix(read.table("Extreme_Prec_95.txt", sep = " "))
 ```
-to avoid renaming all of the variables in latter parts of the script.
+to avoid renaming all of the variables in latter parts of the script. The output will be a .csv file, "cluster_results.csv", contanining the cluster number for each grid point in the TRMM map.
 
-, assuming the input data files are in the working directory. The output will be a .csv file, "cluster_results.csv", contanining the cluster number for each grid point in the TRMM map.
+## Step 4: Compute average recurrence intervals (ARIs) over a target region (ARI_USA.R)
 
+Finally, we fit a statistical model to each of the clusters in a specified region. In this script, we use the continental USA to illustrate the model fitting procedure. The fitted model is a non-stationary Poisson Point Process with month as a time covariate.
 
+To use a different region, modify lines 102-106
+
+```
+long_small       <- 201:500
+lat_small        <- 301:400
+US_Clusters      <- clusterMap[long_small, lat_small]
+US_Clusters_vec  <- unique(as.vector(US_Clusters))
+numClusters      <- length(US_Clusters_vec)
+```
+
+To double check that this is the correct region, you can run the following plotting command:
+
+```
+my_plot(US_Clusters, long = longitude[long_small], lat = latitude[lat_small])
+```
+
+Note: the current version of the code computes confidence intervals for effective return levels. This adds alot of run time to the algorithm and can be skipped if we only want point estimates (for the USA, this version takes around 2.5 hours of runtime). 
+
+In addition, this script returns the 2 and 25 year return levels. To change this, simply modify lines 268-269:
+  
+```  
+rl.ci.NS1 <- try(ci(fit_MLE_NS, type = "return.level", qcov = v, return.period = 2))
+rl.ci.NS2 <- try(ci(fit_MLE_NS, type = "return.level", qcov = v, return.period = 25))
+```
+
+The plotting commands near the end of the script should be modified to reflect the specific results you obtain (e.g. change the plot titles, limits, etc.)
 
 
