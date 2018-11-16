@@ -187,6 +187,6 @@ numClustersTotal <- length(unique(as.vector(clusterMap3)))
 my_plot(clusterMap3, numColors = numClustersTotal, main = "Clustering results")
 
 ## Write clustering output to a .csv file
-# write.csv(clusterMap3, file = "cluster_results_07_28_2016.csv", quote = FALSE, sep = " ",
-#           row.names = FALSE, col.names = FALSE)
+write.csv(clusterMap3, file = "cluster_results.csv", quote = FALSE, sep = " ",
+           row.names = FALSE, col.names = FALSE)
 
