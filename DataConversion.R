@@ -58,6 +58,10 @@ for(k in 1:3){
     nc.data         <- open.nc(ncfile, write = TRUE, path = "Data")
     cur.data        <- read.nc(nc.data, unpack = TRUE)
     
+    ## Note: If you are using .nc4 files instead of .nc files, 
+    ## change line 67 to the following:
+    ## prec <- t(cur.data$precipitation)
+    
     ## Function to move all columns right; I'm converting 
     ## longitude from (0, 360) to (-180, 180)
     prec <- cur.data[[4]]
